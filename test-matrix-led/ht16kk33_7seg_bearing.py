@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # Basic example of setting digits on a LED segment display.
 # This example and library is meant to work with Adafruit CircuitPython API.
 # Author: Tony DiCola
@@ -21,6 +22,18 @@ display = segments.Seg7x4(i2c)
 # Or this creates a 14 segment alphanumeric 4 character display:
 # Clear the display.
 display.fill(0)
+display.brightness = 0.1
 
-# Bearing 
-display.print("125F")
+increment = 0
+
+while True:
+
+  increment = ( increment + 1 ) % 60
+
+  print(f"increment: {increment:03d}")
+
+  # Bearing 
+  display.print(f"00:{increment:03d}")
+
+  time.sleep(1.0)
+
