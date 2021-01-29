@@ -20,6 +20,15 @@ gps.send_command(b"PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0")
 # Set update rate to once a second (1hz) which is what you typically want.
 gps.send_command(b"PMTK220,1000")
 
+# I2C for LED matrix displays
+i2c = busio.I2C(board.SCL, board.SDA)
+display = segments.Seg7x4(i2c)
+# Clear the display.
+display.fill(0)
+display.brightness = 0.1
+
+
+
 # Main loop runs forever printing the location, etc. every second.
 last_print = time.monotonic()
 while True:
@@ -66,4 +75,10 @@ while True:
             print("Horizontal dilution: {}".format(gps.horizontal_dilution))
         if gps.height_geoid is not None:
             print("Height geo ID: {} meters".format(gps.height_geoid))
+
+	# do the work
+        hour = gps.timestamp_utc.tm_hour
+        min = gps.timestamp_utc.tm_min       
+        display.print(f"{hour:02d}:{min:02d}")
+
 
