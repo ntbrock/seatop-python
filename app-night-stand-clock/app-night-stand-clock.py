@@ -89,7 +89,7 @@ while True:
 
 	alphaDisplay.print(f"{sec:02d}PM")
 
-	time.sleep(0.1)
+	time.sleep(0.5)
 
 
 # eof		
