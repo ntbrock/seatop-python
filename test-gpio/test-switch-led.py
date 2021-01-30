@@ -20,8 +20,8 @@ led.value = False
 while True:
 	s = switch.value
 	led.value = not s
-	time.sleep(0.1)
-
+	time.sleep(0.5)
+	print(f"switch: {switch.value}")
 
 
 

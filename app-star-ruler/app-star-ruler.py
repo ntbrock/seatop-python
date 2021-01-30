@@ -58,7 +58,8 @@ markLed = digitalio.DigitalInOut(board.D21)
 markLed.direction = digitalio.Direction.OUTPUT
 markLed.value = False
 
-markSwitch = digitalio.DigitalInOut(board.D20)
+markSwitch = digitalio.DigitalInOut(board.D18)
+
 markSwitch.direction = digitalio.Direction.INPUT
 
 ## User Sounds
