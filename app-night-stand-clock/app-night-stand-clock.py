@@ -87,7 +87,7 @@ while True:
 
 	sevenDisplay.print(f"{hour:02d}:{min:02d}")
 
-	alphaDisplay.print(f"{sec:02d}PM")
+	alphaDisplay.print(f"{sec:02d}Z*")
 
 	time.sleep(0.5)
 
