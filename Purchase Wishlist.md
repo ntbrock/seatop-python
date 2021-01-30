@@ -1,5 +1,10 @@
 Purchase Wishlist:
 
+- New RPI3 or 4
+- Fresh sd cards
+- TCobbler #2
+
+
 - 2x breadboards for pico + teensy
 - best practice is to mount these dev boads onto bread boards to keep em safe
 
@@ -12,7 +17,7 @@ Purchase Wishlist:
 	- What are some mounting options?
 
 - MicroUSB cable inventory?
-
+ 
 - Compass sensor? Axis tilt sensor for Dog Trashcans?
 
 
