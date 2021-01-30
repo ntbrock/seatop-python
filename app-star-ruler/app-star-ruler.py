@@ -79,10 +79,19 @@ alphaLed.print("WFIX")
 
 timeStart = timeLast = timeNow = time.monotonic()
 
+"""
+Meta Start:
+	waiting for fix..  markLed = off
+	numberLed: coutning up seconds.ms since start
+	alphaLed says: "Fix"
+	Fix acquired
+"""
+
 gps.update()
 while not gps.has_fix:
 	timeNow = time.monotonic()
-
+	time.sleep(0.5)
+	gps.update()
 	# Every second print out current location details if there's a fix.
 	if timeNow - timeLast >= 1.0:
 		timeLast = timeNow
@@ -91,15 +100,58 @@ while not gps.has_fix:
 		print(f"waiting on fix {timeDiff:04d}")
 
 
-"""
-- Meta Start:
-	waiting for fix..  markLed = off
-	numberLed: coutning up seconds.ms since start
-	alphaLed says: "Fix"
-	Fix acquired
-"""
+#---------------------------------------------------------------
+# Loop
+
+markPrevious = False
+markLat = 0
+markLon = 0
+loopCount = 0
+
+while True: 
+	loopCount = loopCount + 1
+	# Gps management
+	gps.update()
+
+#	If markswitch False, logic is inverted
+	if markSwitch.value:
+
+#	Show time of day
+		hour = gps.timestamp_utc.tm_hour
+		min = gps.timestamp_utc.tm_min
+		sec = gps.timestamp_utc.tm_sec
+		numberLed.print(f"{hour:02d}:{min:02d}")
+		alphaLed.print(f"{sec:02d}Z*")
+
+#	Pulse Led
+		if loopCount % 4 == 0 :
+			markLed.value = True
+			time.sleep(0.25)
+			markLed.value = False
+			time.sleep(0.25)
+		else:
+			time.sleep(0.5)
+	else: 
+		markLed.value = True
+		time.sleep(0.5)
 
 
+
+#	Event: When Markswitch Pressed,
+#		set markLocation = gps location
+
+#	Calculate: 
+#		disstance between markLocation + gps location
+
+#	If markSwitch True
+#		numberLed = Distance F
+#		alphaLed = Bearing M/T
+
+#	if ( distance > 10 ft )
+#		Pulse buzzer  distance * 0.1 Hz 
+
+#	Event: When markswitch is released,
+#		Go back to time of day mode.
 
 
 
@@ -124,37 +176,8 @@ State machine:
 	> 30 feet  3/second
 """
 
-"""
-- Meta Start:
-	waiting for fix..  markLed = off
-	numberLed: coutning up seconds.ms since start
-	alphaLed says: "Fix"
-	Fix acquired
-"""
 
 """
-- Meta Loop:
-	If markswitch False
-		Show time of day
-		Pulse Led
-
-	Event: When Markswitch Pressed,
-		set markLocation = gps location
-
-	Calculate: 
-		disstance between markLocation + gps location
-
-	If markSwitch True
-		numberLed = Distance F
-		alphaLed = Bearing M/T
-
-	if ( distance > 10 ft )
-		Pulse buzzer  distance * 0.1 Hz 
-
-	Event: When markswitch is released,
-		Go back to time of day mode.
-
-
 + Bonus = data logging
 
 + Bonus = tide chart on 8x8
