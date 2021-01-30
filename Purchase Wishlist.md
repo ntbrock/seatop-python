@@ -5,12 +5,15 @@ Purchase Wishlist:
 
 - More DIN pin rails
 
+
 - Another HDMI cable
 
 - Another Rpico $4!
 	- What are some mounting options?
 
 - MicroUSB cable inventory?
+
+- Compass sensor? Axis tilt sensor for Dog Trashcans?
 
 
 CD player
