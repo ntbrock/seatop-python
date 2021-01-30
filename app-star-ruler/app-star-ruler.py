@@ -115,6 +115,7 @@ while True:
 
 #	If markswitch False, logic is inverted
 	if markSwitch.value:
+		markPrevious = False
 
 #	Show time of day
 		hour = gps.timestamp_utc.tm_hour
@@ -131,21 +132,45 @@ while True:
 			time.sleep(0.25)
 		else:
 			time.sleep(0.5)
+
+
 	else: 
 		markLed.value = True
 		time.sleep(0.5)
 
-
-
 #	Event: When Markswitch Pressed,
 #		set markLocation = gps location
 
+		markEvent = False
+		if not markPrevious:
+			markEvent = True
+		markPrevious = True
+
+		if markEvent:
+			markLat = gps.latitude
+			markLon = gps.longitude
+
+#	Where inthe world am I?
+		nowLat = gps.latitude
+		nowLong = gps.longitude
+
 #	Calculate: 
-#		disstance between markLocation + gps location
+#		distance between markLocation + gps location
+
+		markFeature = Feature(geometry=Point((markLat, markLon)))
+		nowFeature = Feature(geometry=Point((nowLat, nowLong)))
+		
+#		numberLed = Distance F
+		distance = measurement.distance(markFeature, nowFeature)
+		numberLed.print(f"{int(distance):04d}")
+
+#		alphaLed = Bearing M/T
+		bearing = measurement.bearing(markFeature,nowFeature)
+		if bearing < 0:
+			bearing = 360 + bearing
+		alphaLed.print(f"{int(bearing):03d}T")
 
 #	If markSwitch True
-#		numberLed = Distance F
-#		alphaLed = Bearing M/T
 
 #	if ( distance > 10 ft )
 #		Pulse buzzer  distance * 0.1 Hz 
