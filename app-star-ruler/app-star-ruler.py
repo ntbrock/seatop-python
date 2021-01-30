@@ -56,6 +56,7 @@ MATRIX_YELLOW = 3
 ## User Input
 markLed = digitalio.DigitalInOut(board.D21)
 markLed.direction = digitalio.Direction.OUTPUT
+markLed.value = False
 
 markSwitch = digitalio.DigitalInOut(board.D20)
 markSwitch.direction = digitalio.Direction.INPUT
@@ -74,6 +75,20 @@ version = "0.0.2"
 print("app-star-ruler 0.0.2")
 
 numberLed.print(f" {version}")
+alphaLed.print("WFIX")
+
+timeStart = timeLast = timeNow = time.monotonic()
+
+gps.update()
+while not gps.has_fix:
+	timeNow = time.monotonic()
+
+	# Every second print out current location details if there's a fix.
+	if timeNow - timeLast >= 1.0:
+		timeLast = timeNow
+		timeDiff = int(timeNow - timeStart)
+		numberLed.print(f"{timeDiff:04d}")
+		print(f"waiting on fix {timeDiff:04d}")
 
 
 """
