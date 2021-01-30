@@ -18,10 +18,9 @@ from turfpy import measurement
 from geojson import Point, Feature
 
 
-print("app-star-ruler 0.0.2")
+#---------------------------------------------------------------
+# Hardware Constants
 
-
-# Constants:
 ## gps
 uart = serial.Serial("/dev/ttyUSB0", baudrate=9600, timeout=10)
 gps = adafruit_gps.GPS(uart, debug=False)  # Use UART/pyserial
@@ -68,6 +67,27 @@ BUZZER_OFF = 0
 BUZZER_ON = 2**15
 
 
+#---------------------------------------------------------------
+# Start Up 
+
+version = "0.0.2"
+print("app-star-ruler 0.0.2")
+
+numberLed.print(f" {version}")
+
+
+"""
+- Meta Start:
+	waiting for fix..  markLed = off
+	numberLed: coutning up seconds.ms since start
+	alphaLed says: "Fix"
+	Fix acquired
+"""
+
+
+
+
+
 ## Variables:
 ## 	markLocation = [ lat, long ]
 
@@ -95,7 +115,9 @@ State machine:
 	numberLed: coutning up seconds.ms since start
 	alphaLed says: "Fix"
 	Fix acquired
+"""
 
+"""
 - Meta Loop:
 	If markswitch False
 		Show time of day
