@@ -1,5 +1,8 @@
 Purchase Wishlist:
 
+(Aide: my first rpi death, it was someone's old rpi3 that had kodi on it, probably lived a hard life,
+ fell back to an rpi b+ i had vfrom 2018, but I would like to refresh my dev environment, doing my 2nd install of the day)
+
 - New RPI3 or 4
 - Fresh sd cards
 - TCobbler #2
