@@ -18,6 +18,9 @@ from turfpy import measurement
 from geojson import Point, Feature
 
 
+version = "0.0.3"
+
+
 #---------------------------------------------------------------
 # Hardware Constants
 
@@ -73,8 +76,7 @@ BUZZER_ON = 2**15
 #---------------------------------------------------------------
 # Start Up 
 
-version = "0.0.3"
-print("app-star-ruler 0.0.2")
+print("app-star-ruler {version}")
 
 numberLed.print(f" {version}")
 alphaLed.print("WFIX")
