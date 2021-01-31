@@ -154,25 +154,27 @@ while True:
 
 
 		markPrevious = True
+		roundCoordinates = 6
 
 		if markEvent:
-			markLat = gps.latitude
-			markLon = gps.longitude
+			markLat = round(gps.latitude,roundCoordinates)
+			markLon = round(gps.longitude,roundCoordinates)
 
 #	Where inthe world am I?
-		nowLat = gps.latitude
-		nowLong = gps.longitude
+		nowLat = round(gps.latitude,roundCoordinates)
+		nowLong = round(gps.longitude,roundCoordinates)
 
 #	Calculate: 
 #		distance between markLocation + gps location
+#		distance returned in km
 
 		markFeature = Feature(geometry=Point((markLat, markLon)))
 		nowFeature = Feature(geometry=Point((nowLat, nowLong)))
 		
 #		numberLed = Distance F
-		distance = measurement.distance(markFeature, nowFeature)
-		feet = int(distance * 5280.0)
-		print(f"distance raw: {distance}  feet: ${feet}  mark: {markLat} {markLon}  now: {nowLat} {nowLong}  ")
+		distance = round(measurement.distance(markFeature, nowFeature),roundCoordinates)
+		feet = int(distance * 3280.84)
+		print(f"distance raw: {distance}km  feet: {feet}  mark: {markLat} {markLon}  now: {nowLat} {nowLong}  ")
 		numberLed.print(f"{int(feet): 3d}F")
 
 #		alphaLed = Bearing M/T
