@@ -37,13 +37,14 @@ i2c = busio.I2C(board.SCL, board.SDA)
 
 ## 14 segment display
 alphaLed = segments.Seg14x4(i2c, address=0x71)
-alphaLed.brightness = 0.8
+alphaLed.brightness = 1
 alphaLed.fill(0)
 
 ## 7 segment display
 numberLed = segments.Seg7x4(i2c, address=0x70)
-numberLed.brightness = 0.8
+numberLed.brightness = 1
 numberLed.fill(0)
+numberLed.colon = False
 
 ## 8x8 matrix display
 # 2021jan30 dock deom - matrix turned off
@@ -76,7 +77,7 @@ BUZZER_ON = 2**15
 #---------------------------------------------------------------
 # Start Up 
 
-print("app-star-ruler {version}")
+print(f"app-star-ruler {version}")
 
 numberLed.print(f" {version}")
 alphaLed.print("WFIX")
@@ -181,9 +182,9 @@ while True:
 
 #		alphaLed = Bearing M/T
 		offset = -90
-		bearing = measurement.bearing(markFeature,nowFeature)
+		bearing = measurement.bearing(markFeature,nowFeature) + offset
 		if bearing < 0:
-			bearing = 360 + bearing + offset
+			bearing = 360 + bearing
 		alphaLed.print(f"{int(bearing):03d}T")
 
 #	If markSwitch True
