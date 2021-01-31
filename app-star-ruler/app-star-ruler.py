@@ -34,17 +34,18 @@ i2c = busio.I2C(board.SCL, board.SDA)
 
 ## 14 segment display
 alphaLed = segments.Seg14x4(i2c, address=0x71)
-alphaLed.brightness = 0.1
+alphaLed.brightness = 0.8
 alphaLed.fill(0)
 
 ## 7 segment display
 numberLed = segments.Seg7x4(i2c, address=0x70)
-numberLed.brightness = 0.1
+numberLed.brightness = 0.8
 numberLed.fill(0)
 
 ## 8x8 matrix display
-matrixLed = matrix.Matrix8x8x2(i2c, address=0x77)
-matrixLed.fill(0)
+# 2021jan30 dock deom - matrix turned off
+#matrixLed = matrix.Matrix8x8x2(i2c, address=0x77)
+#matrixLed.fill(0)
 
 ## color mapping shortcut
 MATRIX_OFF = 0
@@ -54,16 +55,16 @@ MATRIX_YELLOW = 3
 
 
 ## User Input
-markLed = digitalio.DigitalInOut(board.D21)
+markLed = digitalio.DigitalInOut(board.D18)
 markLed.direction = digitalio.Direction.OUTPUT
 markLed.value = False
 
-markSwitch = digitalio.DigitalInOut(board.D18)
+markSwitch = digitalio.DigitalInOut(board.D23)
 
 markSwitch.direction = digitalio.Direction.INPUT
 
 ## User Sounds
-buzzer = pulseio.PWMOut(board.D16 ) # rpi no support , variable_frequency=True)
+buzzer = pulseio.PWMOut(board.D24) # rpi no support , variable_frequency=True)
 buzzer.frequency = 440 
 BUZZER_OFF = 0
 BUZZER_ON = 2**15
@@ -114,10 +115,11 @@ while True:
 	# Gps management
 	gps.update()
 
-#	If markswitch False, logic is inverted
-	if markSwitch.value:
+#	If markswitch False, logic is no longer inverted on Gpio D23
+	if not markSwitch.value:
 		markPrevious = False
 
+	
 #	Show time of day
 		hour = gps.timestamp_utc.tm_hour
 		min = gps.timestamp_utc.tm_min
@@ -145,6 +147,12 @@ while True:
 		markEvent = False
 		if not markPrevious:
 			markEvent = True
+			# tiny buzz on activation
+			buzzer.duty_cycle = BUZZER_ON
+			time.sleep(0.2)
+			buzzer.duty_cycle = BUZZER_OFF
+
+
 		markPrevious = True
 
 		if markEvent:
@@ -163,6 +171,7 @@ while True:
 		
 #		numberLed = Distance F
 		distance = measurement.distance(markFeature, nowFeature)
+		print(f"distance raw: {distance}")
 		numberLed.print(f"{int(distance):04d}")
 
 #		alphaLed = Bearing M/T
