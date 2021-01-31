@@ -73,7 +73,7 @@ BUZZER_ON = 2**15
 #---------------------------------------------------------------
 # Start Up 
 
-version = "0.0.2"
+version = "0.0.3"
 print("app-star-ruler 0.0.2")
 
 numberLed.print(f" {version}")
@@ -171,13 +171,15 @@ while True:
 		
 #		numberLed = Distance F
 		distance = measurement.distance(markFeature, nowFeature)
-		print(f"distance raw: {distance}")
-		numberLed.print(f"{int(distance):04d}")
+		feet = int(distance * 5280.0)
+		print(f"distance raw: {distance}  feet: ${feet}  mark: {markLat} {markLon}  now: {nowLat} {nowLong}  ")
+		numberLed.print(f"{int(feet): 3d}F")
 
 #		alphaLed = Bearing M/T
+		offset = -90
 		bearing = measurement.bearing(markFeature,nowFeature)
 		if bearing < 0:
-			bearing = 360 + bearing
+			bearing = 360 + bearing + offset
 		alphaLed.print(f"{int(bearing):03d}T")
 
 #	If markSwitch True
