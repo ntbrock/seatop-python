@@ -5,7 +5,7 @@ import board
 import pulseio
 import time
 
-buzzer = pulseio.PWMOut(board.D16, variable_frequency=True)
+buzzer = pulseio.PWMOut(board.D24, variable_frequency=True)
 buzzer.frequency = 440
 
 OFF = 0
