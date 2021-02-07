@@ -72,9 +72,17 @@ bermuda = ( 32.3078, -064.7505) # Atlantic Ocean
 sumter = ( 32.7523, -079.8747 ) # Charleston Harbor
 bohicket = ( 32.6058, -080.1560 ) # Daysail South
 
-startPoint = sumter
-stopPoint = bohicket
+# distance raw: 0.005953km  feet: 19  mark: 32.824255 -79.858597  now: 32.824298 -79.85865
+# distance raw: 0.005733km  feet: 18  mark: 32.824255 -79.858597  now: 32.824298 -79.858648
 
+bedroom1 = (32.824255, -79.858597)
+bedroom2 = (32.824298, -79.85865)
+
+startPoint = bedroom1
+stopPoint = bedroom2
+
+print(f"Start {bedroom1}")
+print(f"Stop  {bedroom2}")
 
 # --------------------------------------------------------------
 # Library 1 haversine
